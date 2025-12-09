@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,33 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        display: ['Comfortaa', 'cursive'],
+                    },
+                    colors: {
+                        cream: '#FFFCF5',
+                        peach: '#FFDAB9',
+                        sage: '#C1E1C1',
+                        latte: '#E6D2B5',
+                        brown: '#4A403A',
+                        'brown-light': '#8C7B75',
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d1d5db' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,362 +43,488 @@
     <!-- Custom Styles -->
     <style>
         :root {
-            /* New Light Blended Theme */
             --color-cream: #FFFCF5;
             --color-peach: #FFDAB9;
             --color-sage: #C1E1C1;
-            --color-latte: #E6D2B5;
-            --color-text-main: #4A403A; /* Soft dark brown for readability */
-            --color-text-light: #8C7B75;
-            --glass-bg: rgba(255, 252, 245, 0.85);
+            --color-text-main: #4A403A;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: var(--color-cream);
-            overflow-x: hidden;
             color: var(--color-text-main);
+            /* Grain Texture Overlay */
+            position: relative;
         }
 
-        h1, h2, h3 {
-            font-family: 'Quicksand', sans-serif;
-            color: var(--color-text-main);
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
         }
 
-        /* Abstract Soft Shapes Animation */
-        .shape-bg {
+        /* Floating Pearls Animation */
+        .pearl {
             position: absolute;
             border-radius: 50%;
-            filter: blur(40px);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+            backdrop-filter: blur(2px);
             z-index: 0;
-            opacity: 0.6;
-            animation: float 10s ease-in-out infinite;
+            animation: float-up linear infinite;
         }
 
-        .shape-1 { background-color: var(--color-peach); width: 300px; height: 300px; top: -50px; left: -50px; }
-        .shape-2 { background-color: var(--color-sage); width: 250px; height: 250px; bottom: 10%; right: -50px; animation-delay: 2s; }
-        .shape-3 { background-color: var(--color-latte); width: 200px; height: 200px; top: 40%; left: 20%; animation-delay: 4s; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(10deg); }
-            66% { transform: translate(-20px, 20px) rotate(-5deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
         }
 
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(45deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; 
+            background-clip: text;
         }
 
-        /* Fade In Animation */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, visibility;
+        .text-gradient-sage {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: none;
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
         }
 
-        /* Custom Gradients */
-        .hero-gradient {
-            /* A soft, light blend for the header */
-            background: linear-gradient(120deg, #fffcf5 0%, #fff0e6 50%, #f0f7f0 100%);
+        /* Button Shine Effect */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+        
+        .btn-shine:hover::after {
+            left: 100%;
+            transition: 0.7s ease-in-out;
         }
 
-        .btn-gradient {
-            /* Attractive Peach to Sage blend */
-            background: linear-gradient(90deg, #F6A998 0%, #AECFA4 100%);
-            transition: all 0.3s ease;
-            color: white;
-        }
-
-        .btn-gradient:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(246, 169, 152, 0.4);
-            filter: brightness(1.05);
-        }
-
-        /* Input Styling */
+        /* Form Input styling */
         .form-input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #EEE5DB;
-            border-radius: 16px;
-            outline: none;
-            transition: all 0.3s;
-            background: #ffffff;
+            padding: 1rem 1.5rem;
+            border: 2px solid transparent;
+            border-radius: 1.5rem;
+            background: #fff;
             color: var(--color-text-main);
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
         
         .form-input:focus {
+            outline: none;
             border-color: var(--color-peach);
-            box-shadow: 0 0 0 4px rgba(255, 218, 185, 0.3);
+            box-shadow: 0 0 0 4px rgba(255, 218, 185, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Loader */
         .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--color-peach);
-            border-radius: 50%;
             width: 20px;
             height: 20px;
-            animation: spin 1s linear infinite;
+            border: 2px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
             display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
         }
-
-        @keyframes spin {
+        @keyframes rotation {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body class="text-gray-700">
+<body class="antialiased selection:bg-orange-200 selection:text-brown">
 
-    <!-- Navigation / Header -->
-    <nav class="fixed w-full z-50 bg-white/70 backdrop-blur-lg shadow-sm border-b border-white/50">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center hover:opacity-80 transition">
-                <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-12 rounded-full border-2 border-white shadow-sm">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-40 top-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-white/70 backdrop-blur-md border-b border-white/50 shadow-sm"></div>
+        <div class="max-w-7xl mx-auto px-6 py-4 relative flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <!-- LOGO in Navbar (Added mix-blend-mode: multiply to hide white background) -->
+                <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 mix-blend-multiply">
             </a>
-            <a href="#feedback" class="hidden md:block px-6 py-2 rounded-full bg-orange-50 text-orange-800 border border-orange-100 font-semibold hover:bg-orange-100 transition shadow-sm">
-                Feedback
-            </a>
+            
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#story" class="text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors">Our Story</a>
+                <a href="#visit" class="text-sm font-bold text-gray-500 hover:text-orange-500 transition-colors">Visit</a>
+                <a href="#feedback" class="px-6 py-2.5 rounded-full bg-brown text-cream font-bold text-sm hover:bg-orange-400 hover:shadow-lg hover:shadow-orange-200 transition-all transform hover:-translate-y-0.5">
+                    Feedback
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2 text-gray-600 hover:text-orange-500">
+                <i data-lucide="menu"></i>
+            </button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-gradient min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
-        <!-- Abstract Blended Background Shapes -->
-        <div class="shape-bg shape-1"></div>
-        <div class="shape-bg shape-2"></div>
-        <div class="shape-bg shape-3"></div>
+    <section class="relative min-h-screen pt-24 pb-12 flex items-center justify-center overflow-hidden">
+        <!-- Dynamic Background Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-orange-50/50 via-white to-green-50/30"></div>
+        
+        <!-- Animated Pearls Background -->
+        <div id="pearls-container" class="absolute inset-0 pointer-events-none overflow-hidden">
+            <!-- JS will populate this -->
+        </div>
 
-        <div class="container mx-auto px-6 text-center relative z-10">
-            <img src="logo.png" alt="Big Scoop Cafe Logo" class="w-64 md:w-72 mx-auto mb-8 drop-shadow-2xl rounded-full border-4 border-white/50">
+        <div class="container mx-auto px-6 relative z-10 text-center">
             
-            <span class="inline-block py-2 px-4 rounded-full bg-white/60 backdrop-blur-sm text-gray-600 text-sm font-bold mb-6 tracking-widest uppercase border border-white">
-                Sip • Scoop • Smile
-            </span>
+            <!-- LOGO in Hero Section (Added mix-blend-mode: multiply) -->
+            <div class="fade-in-up mb-8">
+                <img src="logo.png" alt="Big Scoop Cafe Logo" class="w-64 md:w-80 mx-auto drop-shadow-xl hover:scale-105 transition-transform duration-500 mix-blend-multiply">
+            </div>
+
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 backdrop-blur-sm border border-white shadow-sm text-orange-600 text-xs font-bold tracking-widest uppercase mb-8 fade-in-up delay-100">
+                <span class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+                Freshly Brewed Happiness
+            </div>
             
-            <h1 class="text-5xl md:text-7xl font-extrabold text-gray-800 mb-6 leading-tight">
-                Welcome to <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-green-400">Big Scoop Cafe</span>
+            <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-black text-brown mb-6 leading-[1.1] tracking-tight fade-in-up delay-200">
+                Sip. Scoop. <br>
+                <span class="bg-gradient-to-r from-orange-400 to-pink-500 text-transparent bg-clip-text">Smile.</span>
             </h1>
             
-            <p class="text-lg md:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-                We craft the creamiest boba, the richest coffee, and the sweetest smiles. We’d love to hear what you think!
+            <p class="text-lg md:text-2xl text-brown-light mb-10 max-w-2xl mx-auto font-medium leading-relaxed fade-in-up delay-300">
+                Crafting the creamiest boba, rich artisan coffee, and desserts that hug your soul. Come taste the joy in every cup.
             </p>
             
-            <a href="#feedback" class="btn-gradient inline-flex items-center gap-2 px-10 py-4 rounded-full font-bold text-lg shadow-xl hover:-translate-y-1 transition-transform">
-                <i data-lucide="message-circle-heart"></i> Give Feedback
-            </a>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 fade-in-up delay-300">
+                <a href="#feedback" class="btn-shine group relative px-8 py-4 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full text-white font-bold text-lg shadow-[0_10px_40px_-10px_rgba(255,165,0,0.5)] hover:shadow-[0_20px_40px_-10px_rgba(255,165,0,0.6)] hover:-translate-y-1 transition-all flex items-center gap-2">
+                    <i data-lucide="message-circle-heart" class="group-hover:scale-110 transition-transform"></i>
+                    <span>Give Feedback</span>
+                </a>
+                <a href="#visit" class="px-8 py-4 bg-white text-brown font-bold text-lg rounded-full shadow-lg hover:shadow-xl border border-orange-100 hover:border-orange-200 hover:-translate-y-1 transition-all flex items-center gap-2">
+                    <i data-lucide="map-pin" class="text-orange-400"></i>
+                    <span>Find Us</span>
+                </a>
+            </div>
+            
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="py-24 bg-white/50 backdrop-blur-sm relative">
-        <div class="container mx-auto px-6 fade-in-section relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-4xl font-bold mb-4 text-gray-800">Our Story</h2>
-                <div class="w-20 h-1 bg-gradient-to-r from-orange-300 to-green-300 mx-auto rounded-full mb-6"></div>
-                <p class="text-lg text-gray-500 leading-relaxed">
-                    At Big Scoop Cafe, every cup tells a story. From our hand-rolled boba pearls to our locally sourced coffee beans, we are dedicated to bringing a splash of joy to your day.
+    <!-- Features / Story Section -->
+    <section id="story" class="py-24 relative">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6 text-brown">Brewed with Love</h2>
+                <div class="h-1.5 w-24 bg-gradient-to-r from-orange-300 to-green-300 rounded-full mx-auto mb-8"></div>
+                <p class="text-xl text-brown-light leading-relaxed">
+                    At Big Scoop Cafe, we don't just serve drinks; we serve moments. Every pearl is cooked to chewy perfection, and every bean is roasted to unlock its deepest flavor.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Card 1: Boba (Peach Theme) -->
-                <div class="group p-8 rounded-[2rem] bg-orange-50/50 hover:bg-orange-50 hover:shadow-xl transition-all duration-300 border border-orange-100/50">
-                    <div class="w-16 h-16 bg-orange-100 rounded-2xl rotate-3 group-hover:rotate-6 transition flex items-center justify-center mx-auto mb-6 text-orange-500">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <!-- Boba Card -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+                        <i data-lucide="cup-soda" size="120" class="text-orange-500"></i>
+                    </div>
+                    <div class="w-20 h-20 bg-orange-100 rounded-3xl flex items-center justify-center mb-8 text-orange-500 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300 shadow-sm">
                         <i data-lucide="cup-soda" size="32"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-center text-gray-800">Boba & Tea</h3>
-                    <p class="text-gray-500 text-center">Freshly brewed tea with perfectly chewy tapioca pearls.</p>
+                    <h3 class="font-display text-2xl font-bold mb-4 text-brown">Signature Boba</h3>
+                    <p class="text-brown-light">Freshly shaken teas paired with warm, chewy brown-sugar pearls.</p>
                 </div>
-                <!-- Card 2: Coffee (Brown Theme) -->
-                <div class="group p-8 rounded-[2rem] bg-amber-50/50 hover:bg-amber-50 hover:shadow-xl transition-all duration-300 border border-amber-100/50">
-                    <div class="w-16 h-16 bg-amber-100 rounded-2xl -rotate-3 group-hover:-rotate-6 transition flex items-center justify-center mx-auto mb-6 text-amber-600">
+
+                <!-- Pizza & Burger Card -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
+                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+                        <i data-lucide="pizza" size="120" class="text-red-500"></i>
+                    </div>
+                    <div class="w-20 h-20 bg-red-100 rounded-3xl flex items-center justify-center mb-8 text-red-500 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300 shadow-sm">
+                        <i data-lucide="pizza" size="32"></i>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold mb-4 text-brown">Pizza & Burger</h3>
+                    <p class="text-brown-light">Loaded cheesy pizzas and juicy gourmet burgers made to perfection.</p>
+                </div>
+
+                <!-- Coffee & Shakes Card -->
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
+                     <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-700">
+                        <i data-lucide="coffee" size="120" class="text-amber-600"></i>
+                    </div>
+                    <div class="w-20 h-20 bg-amber-100 rounded-3xl flex items-center justify-center mb-8 text-amber-600 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300 shadow-sm">
                         <i data-lucide="coffee" size="32"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2 text-center text-gray-800">Artisan Coffee</h3>
-                    <p class="text-gray-500 text-center">Rich blends and creamy lattes to start your day right.</p>
-                </div>
-                <!-- Card 3: Treats (Green Theme) -->
-                <div class="group p-8 rounded-[2rem] bg-green-50/50 hover:bg-green-50 hover:shadow-xl transition-all duration-300 border border-green-100/50">
-                    <div class="w-16 h-16 bg-green-100 rounded-2xl rotate-3 group-hover:rotate-6 transition flex items-center justify-center mx-auto mb-6 text-green-600">
-                        <i data-lucide="cookie" size="32"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-center text-gray-800">Sweet Treats</h3>
-                    <p class="text-gray-500 text-center">Delicious cakes, pastries, and scoops of ice cream.</p>
+                    <h3 class="font-display text-2xl font-bold mb-4 text-brown">Coffee & Shakes</h3>
+                    <p class="text-brown-light">Rich artisan roasted coffee and thick, creamy dreamshakes.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Info & Contact Grid -->
-    <section class="py-24">
+    <!-- Visit & Social -->
+    <section id="visit" class="py-12">
         <div class="container mx-auto px-6">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 fade-in-section">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Visit Us -->
-                <div class="bg-white p-12 rounded-[2.5rem] shadow-sm border border-gray-100 relative overflow-hidden group">
-                     <div class="absolute top-0 right-0 w-32 h-32 bg-orange-100 rounded-full blur-3xl -mr-10 -mt-10 opacity-50 group-hover:scale-110 transition"></div>
-                    
-                    <h2 class="text-3xl font-bold mb-8 flex items-center gap-3 text-gray-800">
-                        <span class="p-2 bg-orange-100 rounded-lg text-orange-500"><i data-lucide="map-pin"></i></span> 
-                        Visit Us
-                    </h2>
-                    <div class="space-y-6 text-gray-600">
-                        <div>
-                            <p class="text-xl font-bold text-gray-800 mb-1">Big Scoop Cafe</p>
-                            <p>123 Boba Avenue, Sweet Town<br>California, 90210</p>
+                <!-- Visit Card -->
+                <div class="bg-white p-12 rounded-[3rem] shadow-xl border border-gray-50 relative overflow-hidden group">
+                     <!-- Decorative blob -->
+                     <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-orange-50 rounded-full blur-3xl opacity-60 group-hover:scale-125 transition-transform duration-700"></div>
+
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="p-3 bg-orange-100 text-orange-500 rounded-2xl">
+                                <i data-lucide="map-pin" size="28"></i>
+                            </div>
+                            <h2 class="font-display text-3xl font-bold text-brown">Visit Our Cafe</h2>
                         </div>
-                        <div class="h-px bg-gray-100 w-full"></div>
-                        <div class="flex flex-col gap-3">
-                            <p class="flex items-center gap-3"><i data-lucide="clock" class="text-orange-400"></i> Mon - Sun: 10:00 AM - 10:00 PM</p>
-                            <p class="flex items-center gap-3"><i data-lucide="phone" class="text-orange-400"></i> (555) 123-4567</p>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <p class="text-xl font-bold text-brown mb-2">Big Scoop Cafe</p>
+                                <p class="text-brown-light text-lg">Maruti Samvid, 9, Sardar Patel Rd <br>Opp. SP Auditorium, nr. APC Circle<br>Anand, Gujarat</p>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row gap-8">
+                                <div>
+                                    <p class="text-sm font-bold text-orange-400 uppercase tracking-wider mb-2">Opening Hours</p>
+                                    <p class="text-brown-light flex items-center gap-2">
+                                        <i data-lucide="clock" size="16"></i> Daily: 11am - 11pm
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Instagram -->
-                <div class="bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 p-12 rounded-[2.5rem] shadow-sm flex flex-col justify-center items-center text-center border border-white relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white/40 backdrop-blur-[1px]"></div>
+                <!-- Instagram Card -->
+                <div class="relative rounded-[3rem] p-12 flex flex-col items-center justify-center text-center overflow-hidden shadow-xl group">
+                    <!-- Gradient Background -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 transition-all duration-500"></div>
+                    <!-- Hover Effect Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-100 via-pink-100 to-orange-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
                     <div class="relative z-10">
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800">Follow Us</h2>
-                        <p class="text-gray-600 mb-8 max-w-md mx-auto">
-                            Stay updated with our latest offers, secret menu items, and seasonal desserts. Join our community!
+                        <div class="w-20 h-20 bg-white rounded-3xl shadow-md flex items-center justify-center mx-auto mb-8 text-pink-500 transform group-hover:scale-110 transition-transform duration-300 rotate-3">
+                            <i data-lucide="instagram" size="40"></i>
+                        </div>
+                        
+                        <h2 class="font-display text-3xl font-bold text-brown mb-4">Join the Fam</h2>
+                        <p class="text-brown-light text-lg mb-8 max-w-sm mx-auto">
+                            Follow <span class="font-bold text-pink-500">@bigscoopcafe.anand</span> for secret menu drops, giveaways, and your daily dose of aesthetic vibes.
                         </p>
-                        <a href="https://www.instagram.com/bigscoopcafe" target="_blank" class="bg-white text-pink-500 px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition flex items-center gap-2 mx-auto w-fit">
-                            <i data-lucide="instagram"></i> Follow @bigscoopcafe
+                        
+                        <!-- UPDATED INSTAGRAM LINK HERE -->
+                        <a href="https://www.instagram.com/bigscoopcafe.anand/" target="_blank" class="inline-flex items-center gap-2 bg-white text-pink-500 px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+                            <span>Follow Us</span>
+                            <i data-lucide="arrow-up-right" size="18"></i>
                         </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Feedback Form Section -->
-    <section id="feedback" class="py-24 relative">
-        <div class="container mx-auto px-6 max-w-4xl fade-in-section">
-            <div class="bg-white/80 backdrop-blur-md rounded-[3rem] shadow-2xl p-8 md:p-14 border border-white/60 relative overflow-hidden">
-                <!-- Decorative Circle inside form -->
-                <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-green-100 to-transparent rounded-full blur-3xl opacity-60 -mr-20 -mt-20 pointer-events-none"></div>
+    <!-- Feedback Section -->
+    <section id="feedback" class="py-24 relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-b from-transparent via-white/50 to-orange-50/50 -z-10 rounded-[50%] blur-3xl"></div>
 
-                <div class="text-center mb-12 relative z-10">
-                    <h2 class="text-3xl md:text-5xl font-bold mb-4 text-gray-800">We Value Your Thoughts</h2>
-                    <p class="text-gray-500 text-lg">Help us serve you better. Plus, get special treats on your birthday!</p>
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="glass-card rounded-[3.5rem] p-8 md:p-16 border border-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden">
+                
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
+                    <!-- Left Side: Text -->
+                    <div class="md:col-span-2 flex flex-col justify-center">
+                        <span class="text-orange-500 font-bold tracking-widest uppercase text-xs mb-4">We're Listening</span>
+                        <h2 class="font-display text-4xl font-bold text-brown mb-6">Tell us about your experience</h2>
+                        <p class="text-brown-light mb-8">
+                            Did we make your day? Is there a flavor you're dying to try? Let us know! We reward our best feedback with free scoops.
+                        </p>
+                        <div class="hidden md:block">
+                            <div class="flex -space-x-4 mb-4">
+                                <div class="w-12 h-12 rounded-full bg-orange-100 border-2 border-white flex items-center justify-center text-xs font-bold text-orange-600">JD</div>
+                                <div class="w-12 h-12 rounded-full bg-green-100 border-2 border-white flex items-center justify-center text-xs font-bold text-green-600">AS</div>
+                                <div class="w-12 h-12 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-xs font-bold text-blue-600">MK</div>
+                                <div class="w-12 h-12 rounded-full bg-gray-50 border-2 border-white flex items-center justify-center text-xs text-gray-400">+2k</div>
+                            </div>
+                            <p class="text-sm text-gray-400 font-medium">Join our community of happy sippers.</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Form -->
+                    <div class="md:col-span-3">
+                        <form id="feedbackForm" class="space-y-5">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div class="group">
+                                    <label class="block text-xs font-bold text-brown/60 uppercase ml-3 mb-1.5">Your Name</label>
+                                    <input type="text" name="name" placeholder="John Doe" required class="form-input">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-brown/60 uppercase ml-3 mb-1.5">Phone</label>
+                                    <input type="tel" name="phone" placeholder="(555) 000-0000" required class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label class="block text-xs font-bold text-brown/60 uppercase ml-3 mb-1.5">Email</label>
+                                    <input type="email" name="email" placeholder="john@example.com" required class="form-input">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-brown/60 uppercase ml-3 mb-1.5">Birthday (Optional)</label>
+                                    <input type="date" name="birthdate" class="form-input text-gray-500">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-brown/60 uppercase ml-3 mb-1.5">Your Message</label>
+                                <textarea name="feedback" rows="4" placeholder="What's on your mind?..." required class="form-input resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="submitBtn" class="w-full bg-brown text-white font-bold text-lg py-4 rounded-2xl shadow-lg hover:bg-orange-500 transition-colors flex justify-center items-center gap-2 mt-4">
+                                <span>Send Feedback</span>
+                                <i data-lucide="send" size="18"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
-
-                <form id="feedbackForm" class="space-y-6 relative z-10">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Name -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Full Name</label>
-                            <input type="text" name="name" placeholder="Jane Doe" required class="form-input">
-                        </div>
-                        
-                        <!-- Phone -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Phone Number</label>
-                            <input type="tel" name="phone" placeholder="(555) 000-0000" required class="form-input">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Email -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Email Address</label>
-                            <input type="email" name="email" placeholder="jane@example.com" required class="form-input">
-                        </div>
-                        
-                        <!-- Birthdate -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Birthdate</label>
-                            <input type="date" name="birthdate" class="form-input text-gray-500">
-                        </div>
-                    </div>
-
-                    <!-- Feedback -->
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Your Feedback</label>
-                        <textarea name="feedback" rows="4" placeholder="Tell us what you loved or how we can improve..." required class="form-input"></textarea>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="pt-6">
-                        <button type="submit" id="submitBtn" class="w-full btn-gradient font-bold py-5 rounded-2xl shadow-lg hover:shadow-xl flex justify-center items-center gap-2 text-lg">
-                            <span>Submit Feedback</span>
-                        </button>
-                    </div>
-                    
-                    <p class="text-xs text-center text-gray-400 mt-6">
-                        By submitting, you agree to let us make your day better! 💛
-                    </p>
-                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-100 py-12">
+    <footer class="bg-white/60 border-t border-white py-12">
         <div class="container mx-auto px-6 text-center">
-            <div class="flex justify-center items-center mb-6">
-                <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-16 rounded-full grayscale hover:grayscale-0 transition opacity-80">
+            <div class="flex items-center justify-center gap-2 mb-4 opacity-80 hover:opacity-100 transition-all duration-500 cursor-pointer">
+                 <!-- LOGO in Footer (Added mix-blend-mode: multiply) -->
+                 <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-16 w-auto object-contain mix-blend-multiply">
             </div>
-            <p class="text-gray-400 text-sm">© 2024 Big Scoop Cafe. Sip, Scoop, Smile.</p>
+            <p class="text-brown-light/60 text-sm">© 2024 Big Scoop Cafe. Made with 💛 and lots of Boba.</p>
         </div>
     </footer>
 
-    <!-- Toast Notification (Hidden by default) -->
-    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-40 opacity-0 transition-all duration-500 z-50 max-w-sm">
-        <div class="bg-white border border-green-100 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-6 flex items-start gap-4">
-            <div class="bg-green-100 p-2 rounded-full text-green-600 mt-1">
-                <i data-lucide="check" size="20"></i>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-6 transform translate-y-48 opacity-0 transition-all duration-500 z-50">
+        <div class="bg-white border border-green-100 rounded-3xl shadow-[0_20px_60px_-10px_rgba(0,0,0,0.15)] p-1 pr-6 flex items-center gap-4">
+            <div class="bg-gradient-to-br from-green-400 to-green-500 w-12 h-12 rounded-full flex items-center justify-center text-white shadow-md">
+                <i data-lucide="check" size="24"></i>
             </div>
             <div>
-                <h4 class="font-bold text-gray-800 text-lg" id="toastTitle">Thank you!</h4>
-                <p class="text-sm text-gray-500 mt-1" id="toastMessage">Your feedback has been sent.</p>
+                <h4 class="font-bold text-brown text-base" id="toastTitle">Success!</h4>
+                <p class="text-xs text-brown-light" id="toastMessage">Feedback sent successfully.</p>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <!-- Logic -->
     <script>
-        // --- CONFIGURATION ---
-        // REPLACE THIS URL AFTER DEPLOYING GOOGLE APPS SCRIPT
-        const SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE"; 
+        // --- 1. CONFIGURATION ---
+        // IMPORTANT: Follow the instructions in README.md to get this URL
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwlpYe0W22Z3IpQheIdRrRt3jXvXqBD7UpAoc4qTMnKSG-6cjhJ4taPGr8QewG0rBrxig/exec"; 
 
-        // --- ICONS ---
+        // --- 2. INITIALIZATION ---
         lucide.createIcons();
 
-        // --- ANIMATIONS ---
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
+        // --- 3. FLOATING PEARLS ANIMATION ---
+        function createPearls() {
+            const container = document.getElementById('pearls-container');
+            const pearlCount = 15; // Number of floating circles
+            
+            for(let i=0; i<pearlCount; i++) {
+                const pearl = document.createElement('div');
+                pearl.classList.add('pearl');
+                
+                // Random Size
+                const size = Math.random() * (80 - 20) + 20;
+                pearl.style.width = `${size}px`;
+                pearl.style.height = `${size}px`;
+                
+                // Random Position
+                pearl.style.left = `${Math.random() * 100}%`;
+                
+                // Random Animation Duration & Delay
+                const duration = Math.random() * (15 - 8) + 8;
+                const delay = Math.random() * 5;
+                
+                pearl.style.animationDuration = `${duration}s`;
+                pearl.style.animationDelay = `${delay}s`;
+                
+                // Random Color Tint (Subtle)
+                const colors = ['rgba(255, 218, 185, 0.4)', 'rgba(193, 225, 193, 0.4)', 'rgba(230, 210, 181, 0.4)'];
+                pearl.style.background = colors[Math.floor(Math.random() * colors.length)];
 
-        const observer = new IntersectionObserver((entries, observer) => {
+                container.appendChild(pearl);
+            }
+        }
+        createPearls();
+
+        // --- 4. SCROLL ANIMATIONS ---
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
+                    entry.target.classList.add('fade-in-up');
                     observer.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
-        document.querySelectorAll('.fade-in-section').forEach(section => {
+        // Add observer to sections
+        document.querySelectorAll('section > div').forEach(section => {
+            section.classList.add('opacity-0'); // Initially hide
             observer.observe(section);
         });
 
-        // --- FORM HANDLING ---
+        // --- 5. FORM HANDLING ---
         const form = document.getElementById('feedbackForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast');
@@ -385,13 +534,12 @@
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // 1. Loading State
-            const originalBtnText = submitBtn.innerHTML;
+            // Loading UI
+            const originalContent = submitBtn.innerHTML;
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="loader"></span> Sending...';
-            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            submitBtn.innerHTML = '<span class="loader"></span>';
+            submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
 
-            // 2. Gather Data
             const formData = new FormData(form);
             const data = {
                 name: formData.get('name'),
@@ -402,54 +550,78 @@
                 timestamp: new Date().toISOString()
             };
 
-            // 3. Send to Google Sheets
-            // Note: We use 'no-cors' mode often for GAS, but here we use standard POST
-            // The GAS script must return JSON and handle CORS or we just assume success if no network error.
-            // Using Content-Type text/plain prevents preflight OPTIONS check which helps with GAS.
-            
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8', 
-                },
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             })
             .then(response => {
-                // If the script runs successfully, we proceed.
-                showToast(
-                    "Thank you for your feedback! 💛", 
-                    "We truly appreciate you. Follow us on Instagram @bigscoopcafe for offers and updates!"
-                );
-                form.reset();
+                // Return text first so we can debug non-JSON responses (like 404/403 pages)
+                return response.text().then(text => ({ status: response.status, text }));
+            })
+            .then(({ status, text }) => {
+                let json;
+                try {
+                    json = JSON.parse(text);
+                } catch (e) {
+                    console.error("Server returned non-JSON:", text);
+                    throw new Error("Setup Error: The script returned HTML instead of JSON. Check if your script deployment is set to 'Anyone'.");
+                }
+
+                if (json.result === 'success') {
+                     showToast("Received! 🥤", "Thanks for being awesome.");
+                     form.reset();
+                } else {
+                    // The script ran but returned an error (likely Sheet name mismatch)
+                    console.error("Script execution failed:", json);
+                    
+                    // Specific check for empty error object (common GAS behavior for simple script errors)
+                    if (json.error && Object.keys(json.error).length === 0) {
+                         throw new Error("Sheet Error: Tab 'Sheet1' not found. Please rename your Google Sheet tab to 'Sheet1'.");
+                    }
+                    
+                    throw new Error("Script Error: " + (JSON.stringify(json.error) || "Check Sheet Name/Headers"));
+                }
             })
             .catch(error => {
-                console.error('Error!', error.message);
-                showToast(
-                    "Oops!", 
-                    "Something went wrong. Please try again in a moment."
-                );
+                console.error('Error Details:', error.message);
+                
+                // Show a more specific error toast if possible
+                let msg = "Something broke. Try again?";
+                if (error.message.includes("Sheet Name") || error.message.includes("Sheet Error")) msg = "Error: Rename tab to 'Sheet1'";
+                if (error.message.includes("Setup Error")) msg = "Error: Check Script Permissions.";
+
+                showToast("Oops!", msg);
             })
             .finally(() => {
-                // 4. Reset Button
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+                submitBtn.innerHTML = originalContent;
+                submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                // Re-init icon in button if replaced
+                lucide.createIcons();
             });
         });
 
-        // --- TOAST FUNCTION ---
         function showToast(title, message) {
             toastTitle.innerText = title;
             toastMessage.innerText = message;
-            
-            // Show
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            
-            // Hide after 5 seconds
+            toast.classList.remove('translate-y-48', 'opacity-0');
             setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.add('translate-y-48', 'opacity-0');
             }, 5000);
         }
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('py-2');
+                nav.classList.remove('py-4');
+            } else {
+                nav.classList.add('py-4');
+                nav.classList.remove('py-2');
+            }
+        });
     </script>
 </body>
 </html>
