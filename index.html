@@ -30,7 +30,7 @@
                         'brown-light': '#8C7B75',
                     },
                     backgroundImage: {
-                        'hero-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d1d5db' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+                        'hero-pattern': "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d1d5db' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
                     }
                 }
             }
@@ -192,7 +192,7 @@
     <!-- Navbar -->
     <nav class="fixed w-full z-40 top-0 transition-all duration-300" id="navbar">
         <div class="absolute inset-0 bg-white/70 backdrop-blur-md border-b border-white/50 shadow-sm"></div>
-        <div class="max-w-7xl mx-auto px-6 py-4 relative flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-6 py-4 relative flex justify-between items-center z-50">
             <a href="#" class="flex items-center gap-2 group">
                 <!-- LOGO in Navbar (Added mix-blend-mode: multiply to hide white background) -->
                 <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-10 md:h-12 w-auto object-contain hover:scale-105 transition-transform duration-300 mix-blend-multiply">
@@ -207,9 +207,25 @@
             </div>
             
             <!-- Mobile Menu Button -->
-            <button class="md:hidden p-2 text-gray-600 hover:text-orange-500">
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-orange-500 transition-colors">
                 <i data-lucide="menu"></i>
             </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white/95 backdrop-blur-xl transform translate-x-full transition-transform duration-500 ease-in-out md:hidden flex flex-col items-center justify-center space-y-8">
+            <button id="close-menu-btn" class="absolute top-6 right-6 p-2 text-gray-600 hover:text-orange-500 transition-colors">
+                <i data-lucide="x" size="32"></i>
+            </button>
+            
+            <!-- Logo in Menu -->
+             <img src="logo.png" alt="Big Scoop Cafe Logo" class="h-24 w-auto object-contain mix-blend-multiply mb-4">
+
+            <a href="#story" class="mobile-link text-2xl font-display font-bold text-brown hover:text-orange-500 transition-colors">Our Story</a>
+            <a href="#visit" class="mobile-link text-2xl font-display font-bold text-brown hover:text-orange-500 transition-colors">Visit</a>
+            <a href="#feedback" class="mobile-link px-8 py-3 rounded-full bg-brown text-cream font-bold text-xl hover:bg-orange-400 shadow-lg hover:shadow-orange-200 transition-all">
+                Feedback
+            </a>
         </div>
     </nav>
 
@@ -524,7 +540,31 @@
             observer.observe(section);
         });
 
-        // --- 5. FORM HANDLING ---
+        // --- 5. MOBILE MENU LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            // Toggle the translation class to show/hide
+            mobileMenu.classList.toggle('translate-x-full');
+            // Optional: Toggle body scrolling
+            if (mobileMenu.classList.contains('translate-x-full')) {
+                 document.body.style.overflow = 'auto';
+            } else {
+                 document.body.style.overflow = 'hidden';
+            }
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
+        });
+
+        // --- 6. FORM HANDLING ---
         const form = document.getElementById('feedbackForm');
         const submitBtn = document.getElementById('submitBtn');
         const toast = document.getElementById('toast');
